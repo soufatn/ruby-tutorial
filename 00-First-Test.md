@@ -142,7 +142,13 @@ Now that you have an example to work with, it's time to write a test for your we
 
 If you need to test a staged site behind your firewall, that's no problem: check out [Sauce Connect](http://saucelabs.com/docs/connect).
 
-To use Sauce Connect with the Sauce gem, simply set the ```start_tunnel``` option to ```true``` in your config block:
+To use Sauce Connect with the Sauce gem, simply add it to your Gemfile:
+
+```ruby
+gem "sauce-connect"
+```
+
+then set the ```start_tunnel``` option to ```true``` in your config block:
 
 ```ruby
 Sauce.config do |config|
