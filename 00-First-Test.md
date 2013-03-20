@@ -35,7 +35,7 @@ In your Gemfile:
 group :test, :development do
   # These are the target gems of this tutorial
   gem 'rspec-rails', '~> 2.0'
-  gem 'sauce', '~> 2.2.2'
+  gem 'sauce', '~> 2.3'
   gem 'capybara', '~> 1.0'
 end
 ```
