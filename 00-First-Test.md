@@ -34,9 +34,10 @@ In your Gemfile:
 ```ruby
 group :test, :development do
   # These are the target gems of this tutorial
-  gem 'rspec-rails', '~> 2.0'
+  gem 'rspec-rails', '~> 2.12'
   gem 'sauce', '~> 2.3'
   gem 'capybara', '~> 1.0'
+  gem 'parallel_tests'
 end
 ```
 
@@ -65,7 +66,7 @@ Sauce.config do |c|
 end
 ```
 
-Check out [this list of browser/OS platforms](http://saucelabs.com/docs/browsers) and pick which ones you'd like to test against.
+Check out [this list of device/OS/browser platforms](http://saucelabs.com/docs/browsers) and pick which ones you'd like to test against.
 
 Setting up the Sauce Gem
 -------------------------
@@ -118,9 +119,13 @@ describe "Sauce Labs Browser Documentation" do
 end
 ```
 
-And that's everything!  Running the test (`rake spec:requests`) should give the following output:
+And that's everything!  
 
-    $ rake spec:requests
+You can run your tests as usual with `rake spec:requests`, but to speed things up, we highly recommend parallelizing your tests with [parallel_tests](https://github.com/grosser/parallel_tests). By running tests in parallel on Sauce, you can do builds in a fraction of the time. To run in parallel, just use `rake parallel:spec`.
+
+Either way, you should get the following output:
+
+    $ rake parallel:spec
     .
 
     Finished in 24.31 seconds
@@ -145,19 +150,23 @@ If you need to test a staged site behind your firewall, that's no problem: check
 To use Sauce Connect with the Sauce gem, simply add it to your Gemfile:
 
 ```ruby
-gem "sauce-connect"
+gem 'sauce-connect'
 ```
 
-then set the ```start_tunnel``` option to ```true``` in your config block:
+then enable it in your Sauce.config block:
 
 ```ruby
 Sauce.config do |config|
-  config[:start_tunnel] = true
+  start_tunnel_for_parallel_tests(c)
+  # or, if you're not using parallel_tests, do this instead:
+  # config[:start_tunnel] = true
 end
 ```
 
-**Go Faster!**
+**parallel_tests considerations**
 
-To speed things up, we highly recommend parallelizing your tests with [parallel_tests](https://github.com/grosser/parallel_tests). By running tests in parallel on Sauce, you can do builds in a fraction of the time.
+If you find that you run into problems with all your tests using the same db at once, or otherwise need some careful setup, the 
+[parallel_tests instructions](https://github.com/grosser/parallel_tests)
+have useful info.
 
 <!-- SAUCE:INCLUDE:get-support -->
