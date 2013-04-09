@@ -8,14 +8,15 @@ Sauce.config do |c|
   c[:browsers] = [["Windows 7", "Internet Explorer", "9"]]
 end
 
-describe "Sauce Labs Browser Documentation" do
-  it "Displays Ruby code only when Ruby selected" do
-    visit "https://saucelabs.com/docs/browsers"
-    select('ruby', :from => 'lang-chooser')
-    caps = page.find(:xpath, "//p[contains(., 'caps = Selenium::WebDriver::Remote::Capabilities')]")
-    caps.visible?.should be_true
-  end
+describe "Wikipedia's Ramen Page" do
+  it "Should mention the inventor of instant Ramen" do
+    visit "http://en.wikipedia.org/"
+    fill_in 'search', :with => "Ramen"
+    click_button "searchButton"
+    page.should have_content "Momofuku Ando"
+  end 
 end
+
 ```
 
 And get an integration test in IE9 on Windows 7 with screenshots, video and a log of passes and failures.
@@ -109,13 +110,13 @@ We're going to put our test in the spec/requests directory so that rspec include
 ```ruby
 require "spec_helper"
 
-describe "Sauce Labs Browser Documentation" do
-  it "Displays Ruby code only when Ruby selected" do
-    visit "https://saucelabs.com/docs/browsers"
-    select('ruby', :from => 'lang-chooser')
-    caps = page.find(:xpath, "//p[contains(., 'caps = Selenium::WebDriver::Remote::Capabilities')]")
-    caps.visible?.should be_true
-  end
+describe "Wikipedia's Ramen Page", :type => :feature do
+  it "Should mention the inventor of instant Ramen" do
+    visit "http://en.wikipedia.org/"
+    fill_in 'search', :with => "Ramen"
+    click_button "searchButton"
+    page.should have_content "Momofuku Ando"
+  end 
 end
 ```
 
