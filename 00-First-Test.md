@@ -67,7 +67,7 @@ Sauce.config do |c|
 end
 ```
 
-Check out [this list of device/OS/browser platforms](http://saucelabs.com/docs/browsers) and pick which ones you'd like to test against.
+Check out [our platforms page](http://saucelabs.com/docs/browsers) and pick which ones you'd like to test against.
 
 Setting up the Sauce Gem
 -------------------------
