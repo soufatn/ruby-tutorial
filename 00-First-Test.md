@@ -1,11 +1,16 @@
 Using Sauce Labs with Ruby
 ============
 
+Sauce Labs provides over 130 platforms to run Selenium tests against, including Linux, OSX, Windows (XP, 7, 8), iOS and Android.  The Sauce Gem makes it easy to take your existing tests, or write new ones, and run them with Sauce.
+
 Once you're set up, you'll write tests like this:
 
 ```ruby
 Sauce.config do |c|
-  c[:browsers] = [["Windows 7", "Internet Explorer", "9"]]
+  c[:browsers] = [
+    ["Windows 7", "Internet Explorer", "9"],
+    ["Mac", "Firefox", "17"]
+  ]
 end
 
 describe "Wikipedia's Ramen Page" do
@@ -17,11 +22,24 @@ describe "Wikipedia's Ramen Page" do
   end 
 end
 
+describe "Wikipedia's Miso Page" do
+  it "Should mention a favorite type of Miso" do
+    visit "http://en.wikipedia.org/"
+    fill_in 'search', :with => "Miso"
+    click_button "searchButton"
+    page.should have_content "Akamiso"
+  end 
+end
+
 ```
 
-And get an integration test in IE9 on Windows 7 with screenshots, video and a log of passes and failures.
+And get an integration test that runs each example group in parallel, 
+first against IE 9 on Windows 7, then Firefox 17 on OSX.  Your tests 
+are run in real browsers on a real operating system, running on a 
+freshly baked VM.  Once they're complete, screenshots, video, Selenium 
+log and a log of passes and failures can be seen and shared.
 
-This example uses [Capybara](http://jnicklas.github.com/capybara/) and RSpec with Rails 3.2.x and Ruby 1.9.3, but Sauce Labs also works great against any Ruby web stack, and with [Test::Unit](https://saucelabs.com/docs/ondemand/getting-started/env/ruby/se2/mac), [Cucumber](https://github.com/sauce-labs/sauce_ruby/wiki/Cucumber-and-Capybara), and most other testing frameworks... right down to vanilla [WebDriver](http://code.google.com/p/selenium/wiki/RubyBindings).
+This example uses [Capybara](http://jnicklas.github.com/capybara/) ~> 2.0.3 and RSpec with Rails 3.2.x and Ruby 1.9.3, but Sauce Labs also works great against any Ruby web stack, and with [Test::Unit](https://saucelabs.com/docs/ondemand/getting-started/env/ruby/se2/mac), [Cucumber](https://github.com/sauce-labs/sauce_ruby/wiki/Cucumber-and-Capybara), and most other testing frameworks... right down to vanilla [WebDriver](http://code.google.com/p/selenium/wiki/RubyBindings).
 
 We're working on making this tutorial as clear, simple, and relevant
 as possible. If you run into any problems, or have questions or
@@ -36,8 +54,9 @@ In your Gemfile:
 group :test, :development do
   # These are the target gems of this tutorial
   gem 'rspec-rails', '~> 2.12'
-  gem 'sauce', '~> 2.3'
-  gem 'capybara', '~> 1.0'
+  gem 'sauce', '~> 2.4.0'
+  gem 'sauce-connect', '~> 2.4.0'
+  gem 'capybara', '~> 2.0.3'
   gem 'parallel_tests'
 end
 ```
@@ -63,7 +82,10 @@ Next we can add the following block to configure which browsers we want to use:
 
 ```ruby
 Sauce.config do |c|
-  c[:browsers] = [["Windows 7", "Internet Explorer", "9"]]
+  c[:browsers] = [
+    ["Windows 7", "Internet Explorer", "9"],
+    ["Mac", "Firefox", "17"]
+  ]
 end
 ```
 
@@ -97,20 +119,23 @@ Open your environment variables settings window (Instructions [here](http://www.
     Value:  <!-- SAUCE:ACCESS_KEY -->
 <!-- SAUCE:END_PLATFORM -->
 
-Writing your test
+Writing your tests
 -----------------
 
 Phew!  That's all your setup done.  You're ready to write your tests.
 
-We're going to put our test in the spec/requests directory so that rspec includes the Capybara DSL:
+Any tests in spec/selenium will get run against multiple browsers, but
+because we want the Capybara DSL included, we're going to put our tests in
+the spec/features directory.  We can still turn on the Sauce voodoo by
+tagging our example groups with `ruby :sauce => true`, like this:
 
     mkdir ./spec/requests
-    vim ./spec/requests/browser_docs_spec.rb
+    vim ./spec/requests/ramen_spec.rb
 
 ```ruby
 require "spec_helper"
 
-describe "Wikipedia's Ramen Page", :type => :feature do
+describe "Wikipedia's Ramen Page", :sauce => true do
   it "Should mention the inventor of instant Ramen" do
     visit "http://en.wikipedia.org/"
     fill_in 'search', :with => "Ramen"
@@ -119,22 +144,52 @@ describe "Wikipedia's Ramen Page", :type => :feature do
   end 
 end
 ```
+That's one spec, how about another?
 
-And that's everything!  
+    vim ./spec/requests/miso_spec.rb
 
-You can run your tests as usual with `rake spec:requests`, but to speed things up, we highly recommend parallelizing your tests with [parallel_tests](https://github.com/grosser/parallel_tests). By running tests in parallel on Sauce, you can do builds in a fraction of the time. To run in parallel, just use `rake parallel:spec`.
+```ruby
+require "spec_helper"
 
-Either way, you should get the following output:
+describe "Wikipedia's Miso Page", :sauce => true do
+  it "Should mention a favorite type of Miso" do
+    visit "http://en.wikipedia.org/"
+    fill_in 'search', :with => "Miso"
+    click_button "searchButton"
+    page.should have_content "Akamiso"
+  end 
+end
+```
 
-    $ rake parallel:spec
-    .
+And that's everything!
 
-    Finished in 24.31 seconds
+Running your tests
+------------------
+
+`rake parallel:spec[2]`.
+
+It's that simple (Thanks in part to the [parallel_tests](https://github.com/grosser/parallel_tests) gem)
+
+You should get the following output:
+
+    Finished in 1 minute 18.14 seconds
     1 example, 0 failures
 
-    Randomized with seed 6006
+    Randomized with seed 40484
 
-The `1 example, 0 failures` line means the test is passing, congratulations!
+    .
+
+    Finished in 1 minute 19.89 seconds
+    1 example, 0 failures
+
+    Randomized with seed 56147
+
+
+    2 examples, 0 failures
+
+The `2 examples, 0 failures` line means the tests are passing, congratulations!
+
+Your tests ran in two groups simultaneously, each test running on each browser in turn.  Running in parallel makes your build faster, running across multiple browsers makes your product reach a wider audience.
 
 Check out the results, including a command log, screenshots, and video of the browser executing the test, on your [account page](https://saucelabs.com/account).
 
@@ -168,6 +223,6 @@ end
 
 If you find that you run into problems with all your tests using the same db at once, or otherwise need some careful setup, the 
 [parallel_tests instructions](https://github.com/grosser/parallel_tests)
-have useful info.
+has useful info.
 
 <!-- SAUCE:INCLUDE:get-support -->
