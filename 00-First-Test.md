@@ -1,7 +1,7 @@
 Using Sauce Labs with Ruby
 ============
 
-Sauce Labs provides over 130 platforms to run Selenium tests against, including Linux, OSX, Windows (XP, 7, 8), iOS and Android.  The Sauce Gem makes it easy to take your existing tests, or write new ones, and run them with Sauce.
+Sauce Labs provides over 130 platforms to run Selenium tests against, including Linux, OS X, Windows (XP, 7, 8), iOS and Android.  The Sauce Gem makes it easy to take your existing tests, or write new ones, and run them with Sauce.
 
 Once you're set up, you'll write tests like this:
 
@@ -34,7 +34,7 @@ end
 ```
 
 And get an integration test that runs each example group in parallel, 
-first against IE 9 on Windows 7, then Firefox 17 on OSX.  Your tests 
+first against IE 9 on Windows 7, then Firefox 17 on OS X.  Your tests 
 are run in real browsers on a real operating system, running on a 
 freshly baked VM.  Once they're complete, screenshots, video, Selenium 
 log and a log of passes and failures can be seen and shared.
