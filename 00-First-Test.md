@@ -129,8 +129,8 @@ because we want the Capybara DSL included, we're going to put our tests in
 the spec/features directory.  We can still turn on the Sauce voodoo by
 tagging our example groups with `ruby :sauce => true`, like this:
 
-    mkdir ./spec/requests
-    vim ./spec/requests/ramen_spec.rb
+    $ mkdir ./spec/requests
+    $ vim ./spec/requests/ramen_spec.rb
 
 ```ruby
 require "spec_helper"
@@ -146,7 +146,7 @@ end
 ```
 That's one spec, how about another?
 
-    vim ./spec/requests/miso_spec.rb
+    $ vim ./spec/requests/miso_spec.rb
 
 ```ruby
 require "spec_helper"
@@ -166,7 +166,7 @@ And that's everything!
 Running your tests
 ------------------
 
-`rake parallel:spec[2]`.
+`$ rake parallel:spec[2]`
 
 It's that simple (Thanks in part to the [parallel_tests](https://github.com/grosser/parallel_tests) gem)
 
