@@ -55,7 +55,7 @@ group :test, :development do
   # These are the target gems of this tutorial
   gem 'rspec-rails', '~> 2.12'
   gem 'sauce', '~> 2.4.0'
-  gem 'sauce-connect', '~> 2.3.0'
+  gem 'sauce-connect', '~> 2.4.0'
   gem 'capybara', '~> 2.0.3'
   gem 'parallel_tests'
 end
