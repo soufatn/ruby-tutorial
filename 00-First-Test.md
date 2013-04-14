@@ -166,7 +166,8 @@ Running your tests
 
 `$ rake parallel:spec[2]`
 
-It's that simple (Thanks in part to the [parallel_tests](https://github.com/grosser/parallel_tests) gem)
+It's that simple (Thanks in part to the excellent [parallel_tests](https://github.com/grosser/parallel_tests) gem.)
+To crank up the parallelism, just change `[2]` to any number of concurrent tests.
 
 You should get the following output:
 
