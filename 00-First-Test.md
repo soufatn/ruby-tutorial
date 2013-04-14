@@ -35,9 +35,7 @@ end
 
 ```
 
-...and get an integration test that runs each example group in parallel,
-first against IE 9 on Windows 7, then Firefox 17 on OS X.  Your tests
-are run in real browsers on a real operating system, in a dedicated, single-use VM.
+Your tests are run in real browsers on a real operating system, in a dedicated, single-use VM.
 Once they're complete, screenshots, video, Selenium log and a log of
 passes and failures can be seen and shared.
 
