@@ -1,7 +1,9 @@
 Using Sauce Labs with Ruby
 ============
 
-Sauce Labs provides over 130 platforms to run Selenium tests against, including Linux, OS X, Windows (XP, 7, 8), iOS and Android.  The Sauce Gem makes it easy to take your existing tests, or write new ones, and run them with Sauce.
+Sauce Labs lets you run Selenium or Capybara tests against a wide range of browsers on Windows (XP, 7, 8), OS X, Linux, iOS and Android. The sauce gem makes it easy to take your existing tests, or write new ones, and run them with Sauce. 
+
+This example uses [Capybara](http://jnicklas.github.com/capybara/) and RSpec with Rails 3 and Ruby 1.9, but Sauce Labs also works great against any Ruby web stack, and with [Test::Unit](https://saucelabs.com/docs/ondemand/getting-started/env/ruby/se2/mac), [Cucumber](https://github.com/sauce-labs/sauce_ruby/wiki/Cucumber-and-Capybara), and most other testing frameworks... right down to vanilla [WebDriver](http://code.google.com/p/selenium/wiki/RubyBindings).
 
 Once you're set up, you'll write tests like this:
 
@@ -33,13 +35,11 @@ end
 
 ```
 
-And get an integration test that runs each example group in parallel, 
+...and get an integration test that runs each example group in parallel, 
 first against IE 9 on Windows 7, then Firefox 17 on OS X.  Your tests 
-are run in real browsers on a real operating system, running on a 
-freshly baked VM.  Once they're complete, screenshots, video, Selenium 
-log and a log of passes and failures can be seen and shared.
-
-This example uses [Capybara](http://jnicklas.github.com/capybara/) ~> 2.0.3 and RSpec with Rails 3.2.x and Ruby 1.9.3, but Sauce Labs also works great against any Ruby web stack, and with [Test::Unit](https://saucelabs.com/docs/ondemand/getting-started/env/ruby/se2/mac), [Cucumber](https://github.com/sauce-labs/sauce_ruby/wiki/Cucumber-and-Capybara), and most other testing frameworks... right down to vanilla [WebDriver](http://code.google.com/p/selenium/wiki/RubyBindings).
+are run in real browsers on a real operating system, in a dedicated, single-use VM.  
+Once they're complete, screenshots, video, Selenium log and a log of 
+passes and failures can be seen and shared.
 
 We're working on making this tutorial as clear, simple, and relevant
 as possible. If you run into any problems, or have questions or
@@ -66,7 +66,7 @@ Setting up RSpec
 
 From your `$RAILS_ROOT`, generate a ./spec directory, a ./spec/spec_helper.rb file, and a warm, fuzzy feeling of productivity by executing:
 
-    rails generate rspec:install
+    $ rails generate rspec:install
 
 Inside the newly created spec/spec_helper.rb, just under the other `require` statements, we'll add Capybara and the Sauce gem, and tell Capybara to use Sauce Labs for all tests (by default, it's only used for tests marked :js => true):
 
@@ -89,7 +89,7 @@ Sauce.config do |c|
 end
 ```
 
-Check out [our platforms page](http://saucelabs.com/docs/browsers) and pick which ones you'd like to test against.
+Check out [our platforms page](http://saucelabs.com/docs/platforms) and pick which ones you'd like to test against.
 
 Setting up the Sauce Gem
 -------------------------
