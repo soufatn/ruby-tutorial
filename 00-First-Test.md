@@ -1,7 +1,7 @@
 Using Sauce Labs with Ruby
 ============
 
-Sauce Labs lets you run Selenium or Capybara tests against a wide range of browsers on Windows (XP, 7, 8), OS X, Linux, iOS and Android. The sauce gem makes it easy to take your existing tests, or write new ones, and run them with Sauce. 
+The sauce gem makes it easy to take your existing Selenium or Capybara tests, or write new ones, and run them against a wide range of browsers on Windows (XP, 7, 8), OS X, Linux, iOS and Android. 
 
 This example uses [Capybara](http://jnicklas.github.com/capybara/) and RSpec with Rails 3 and Ruby 1.9, but Sauce Labs also works great against any Ruby web stack, and with [Test::Unit](https://saucelabs.com/docs/ondemand/getting-started/env/ruby/se2/mac), [Cucumber](https://github.com/sauce-labs/sauce_ruby/wiki/Cucumber-and-Capybara), and most other testing frameworks... right down to vanilla [WebDriver](http://code.google.com/p/selenium/wiki/RubyBindings).
 
