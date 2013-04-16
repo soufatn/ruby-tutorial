@@ -125,7 +125,7 @@ Phew!  That's all your setup done.  You're ready to write your tests.
 Any tests in spec/selenium will get run against multiple browsers, but
 because we want the Capybara DSL included, we're going to put our tests in
 the spec/features directory.  We can still turn on the Sauce voodoo by
-tagging our example groups with `ruby :sauce => true`, like this:
+tagging our example groups with `:sauce => true`, like this:
 
     $ mkdir ./spec/requests
     $ vim ./spec/requests/ramen_spec.rb
