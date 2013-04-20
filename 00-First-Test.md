@@ -76,14 +76,26 @@ require 'sauce/capybara'
 Capybara.default_driver = :sauce
 ```
 
+We'll add the browsers we want to run, and figure out which to use based on the thread we're in:
+```ruby
+BROWSERS = [
+  ["Windows", "Firefox", "18"],
+  ["Linux", "Chrome", nil],
+  ["Mac", "Firefox", "19"],
+  ["Mac", "Firefox", "17"]
+]
+
+index = ENV["TEST_ENV_NUMBER"] != "" ? (ENV["TEST_ENV_NUMBER"].to_i ) : 1
+platform = BROWSERS[index]
+```
+
 Next we can add the following block to configure which browsers we want to use:
 
 ```ruby
 Sauce.config do |c|
-  c[:browsers] = [
-    ["Windows 7", "Internet Explorer", "9"],
-    ["Mac", "Firefox", "17"]
-  ]
+  c[:browser] = platform[0]
+  c[:os] = platform[1]
+  c[:version] = platform[2]
 end
 ```
 
@@ -122,10 +134,9 @@ Writing your tests
 
 Phew!  That's all your setup done.  You're ready to write your tests.
 
-Any tests in spec/selenium will get run against multiple browsers, but
-because we want the Capybara DSL included, we're going to put our tests in
+Because we want the Capybara DSL included, we're going to put our tests in
 the spec/features directory.  We can still turn on the Sauce voodoo by
-tagging our example groups with `:sauce => true`, like this:
+tagging each describe block ('example group' in RSpec-lish)  with `:sauce => true`, like this:
 
     $ mkdir ./spec/requests
     $ vim ./spec/requests/ramen_spec.rb
@@ -164,31 +175,43 @@ And that's everything!
 Running your tests
 ------------------
 
-`$ rake parallel:spec[2]`
+`$ parallel_test -n 4 -e 'rspec'`
 
 It's that simple (Thanks in part to the excellent [parallel_tests](https://github.com/grosser/parallel_tests) gem.)
-To crank up the parallelism, just change `[2]` to any number of concurrent tests.
+The `[4]` here is the number of parallel test to run; set this to the number of browsers you want running in parallel.
 
 You should get the following output:
 
     Finished in 1 minute 18.14 seconds
-    1 example, 0 failures
+    2 examples, 0 failures
 
     Randomized with seed 40484
 
     .
 
     Finished in 1 minute 19.89 seconds
-    1 example, 0 failures
-
-    Randomized with seed 56147
-
-
     2 examples, 0 failures
 
-The `2 examples, 0 failures` line means the tests are passing, congratulations!
+    Randomized with seed 56147
+    
+    .
+    
+    Finished in 1 minute 45.34 seconds
+    2 examples, 0 failures
 
-Your tests ran in two groups simultaneously, each test running on each browser in turn.  Running in parallel makes your build faster, running across multiple browsers makes your product reach a wider audience.
+    Randomized with seed 40423
+
+    .
+
+    Finished in 2 minutes 1.13 seconds
+    2 examples, 0 failures
+
+    Randomized with seed 82321
+
+
+The `2 examples, 0 failures` lines means the tests are passing, congratulations!
+
+Running in parallel makes your build faster, and doing it with multiple browsers helps you reach a wider audience.
 
 Check out the results, including a command log, screenshots, and video of the browser executing the test, on your [account page](https://saucelabs.com/account).
 
