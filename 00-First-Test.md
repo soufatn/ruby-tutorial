@@ -93,8 +93,8 @@ Next we can add the following block to configure which browsers we want to use:
 
 ```ruby
 Sauce.config do |c|
-  c[:browser] = platform[0]
-  c[:os] = platform[1]
+  c[:os] = platform[0]
+  c[:browser] = platform[1]
   c[:version] = platform[2]
 end
 ```
