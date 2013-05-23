@@ -225,7 +225,9 @@ gem 'sauce-connect'
 then enable it in your Sauce.config block:
 
 ```ruby
-Sauce.config do |config|
+require 'sauce/parallel'
+
+Sauce.config do |co|
   start_tunnel_for_parallel_tests(c)
   # or, if you're not using parallel_tests, do this instead:
   # config[:start_tunnel] = true
