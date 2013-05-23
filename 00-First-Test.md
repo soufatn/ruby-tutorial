@@ -24,15 +24,6 @@ describe "Wikipedia's Ramen Page" do
   end 
 end
 
-describe "Wikipedia's Miso Page" do
-  it "Should mention a favorite type of Miso" do
-    visit "http://en.wikipedia.org/"
-    fill_in 'search', :with => "Miso"
-    click_button "searchButton"
-    page.should have_content "Akamiso"
-  end 
-end
-
 ```
 
 Your tests are run in real browsers on a real operating system, in a dedicated, single-use VM.
