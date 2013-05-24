@@ -76,13 +76,8 @@ BROWSERS = [
   ["Mac", "Firefox", "17"]
 ]
 
-index = ENV["TEST_ENV_NUMBER"] != "" ? (ENV["TEST_ENV_NUMBER"].to_i ) : 1
+index = ENV["TEST_ENV_NUMBER"] != "" ? (ENV["TEST_ENV_NUMBER"].to_i - 1) : 0
 platform = BROWSERS[index]
-```
-
-Next we can add the following block to configure which browsers we want to use:
-
-```ruby
 Sauce.config do |c|
   c[:os] = platform[0]
   c[:browser] = platform[1]
