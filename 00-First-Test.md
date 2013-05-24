@@ -222,7 +222,7 @@ then enable it in your Sauce.config block:
 ```ruby
 require 'sauce/parallel'
 
-Sauce.config do |co|
+Sauce.config do |c|
   start_tunnel_for_parallel_tests(c)
   # or, if you're not using parallel_tests, do this instead:
   # config[:start_tunnel] = true
