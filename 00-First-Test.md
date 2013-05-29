@@ -164,7 +164,7 @@ Running your tests
 `$ parallel_test -n 4 -e 'rspec'`
 
 It's that simple (Thanks in part to the excellent [parallel_tests](https://github.com/grosser/parallel_tests) gem.)
-The `[4]` here is the number of parallel test to run; set this to the number of browsers you want running in parallel.
+The `-n 4` here is the number of parallel test to run; set this to the number of browsers you want running in parallel.
 
 You should get the following output:
 
