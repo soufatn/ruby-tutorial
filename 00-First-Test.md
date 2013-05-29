@@ -78,10 +78,10 @@ BROWSERS = [
 
 index = ENV["TEST_ENV_NUMBER"] != "" ? (ENV["TEST_ENV_NUMBER"].to_i - 1) : 0
 platform = BROWSERS[index]
-Sauce.config do |c|
-  c[:os] = platform[0]
-  c[:browser] = platform[1]
-  c[:version] = platform[2]
+Sauce.config do |config|
+  config[:os] = platform[0]
+  config[:browser] = platform[1]
+  config[:version] = platform[2]
 end
 ```
 
@@ -222,8 +222,8 @@ then enable it in your Sauce.config block:
 ```ruby
 require 'sauce/parallel'
 
-Sauce.config do |c|
-  start_tunnel_for_parallel_tests(c)
+Sauce.config do |config|
+  start_tunnel_for_parallel_tests(config)
   # or, if you're not using parallel_tests, do this instead:
   # config[:start_tunnel] = true
 end
