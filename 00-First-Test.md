@@ -68,7 +68,7 @@ From your `$RAILS_ROOT`, generate a ./spec directory, a ./spec/spec_helper.rb fi
 Set up your spec_helper and create a template sauce_helper, by running:
     $ rake sauce:install
 
-Now, open the new spec/spec_helper.rb file, add a ```require "sauce/capybara" and configure your desired test platforms:
+Now, open the new spec/spec_helper.rb file, add a `require "sauce/capybara"` and configure your desired test platforms:
 
 ```ruby
 require "sauce"
@@ -176,6 +176,7 @@ Your tests will run once for every platform, taking advantage of Sauce Labs to r
 
 You should output much like the following:
 
+```
 20 processes for 8 specs, ~ 0 specs per process
 [Connecting to Sauce Labs...]
 [Connecting to Sauce Labs...]
@@ -199,7 +200,7 @@ Sauce Connect 3.0-r25, build 38
 8 examples, 0 failures
 
 Took 196.657036 seconds
-
+```
 
 The `8 examples, 0 failures` lines means your tests are running against each browser, and passing, congratulations!
 
