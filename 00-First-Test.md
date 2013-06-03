@@ -65,7 +65,10 @@ From your `$RAILS_ROOT`, generate a ./spec directory, a ./spec/spec_helper.rb fi
 
     $ rails generate rspec:install
     
-Create a spec/sauce_helper.rb file and configure the platforms you wish to test on:
+Set up your spec_helper and create a template sauce_helper, by running:
+    $ rake sauce:install
+
+Now, open the new spec/spec_helper.rb file, add a ```require "sauce/capybara" and configure your desired test platforms:
 
 ```ruby
 require "sauce"
@@ -83,12 +86,11 @@ end
 
 Check out [our platforms page](http://saucelabs.com/docs/platforms) for available platforms (130+ and counting!).
 
-Inside the newly created spec/spec_helper.rb, just under the other `require` statements, we'll add Capybara and sauce_helper, and tell Capybara to use Sauce Labs for all tests (by default, it's only used for tests marked :js => true):
+Inside the newly created spec/spec_helper.rb, just under the other `require` statements, we'll add requires for capybara/rails and capybara/rspec, and tell Capybara to use Sauce Labs for all tests (by default, it's only used for tests marked :js => true):
 
 ```ruby
 require 'capybara/rails'
 require 'capybara/rspec'
-require 'sauce_helper'
 
 Capybara.default_driver = :sauce
 ```
@@ -172,26 +174,34 @@ Running your tests
 It's that simple (Thanks in part to the excellent [parallel_tests](https://github.com/grosser/parallel_tests) gem.)
 Your tests will run once for every platform, taking advantage of Sauce Labs to run as concurrently as possible.
 
-You should get the following output:
+You should output much like the following:
 
-    .
+20 processes for 8 specs, ~ 0 specs per process
+[Connecting to Sauce Labs...]
+[Connecting to Sauce Labs...]
+[Connecting to Sauce Labs...]
+[Connecting to Sauce Labs...]
+[Connecting to Sauce Labs...]
+[Connecting to Sauce Labs...]
+[Connecting to Sauce Labs...]
+[Connecting to Sauce Labs...]
+Sauce Connect 3.0-r25, build 38
+Sauce Connect 3.0-r25, build 38
+Sauce Connect 3.0-r25, build 38
+Sauce Connect 3.0-r25, build 38
+Sauce Connect 3.0-r25, build 38
+Sauce Connect 3.0-r25, build 38
+Sauce Connect 3.0-r25, build 38
+Sauce Connect 3.0-r25, build 38
 
-    Finished in 1 minute 19.89 seconds
-    2 examples, 0 failures
+[snip]A LOT OF TEST DATA[/snip]
 
-    Randomized with seed 56147
-    
-    ## The same thing * 6
+8 examples, 0 failures
 
-    .
-
-    Finished in 2 minutes 1.13 seconds
-    2 examples, 0 failures
-
-    Randomized with seed 82321
+Took 196.657036 seconds
 
 
-The `1 examples, 0 failures` lines means the tests are passing, congratulations!
+The `8 examples, 0 failures` lines means your tests are running against each browser, and passing, congratulations!
 
 Running in parallel makes your build faster, and doing it with multiple browsers helps you reach a wider audience.
 
