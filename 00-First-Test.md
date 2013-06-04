@@ -43,7 +43,7 @@ In your Gemfile:
 group :test, :development do
   # These are the target gems of this tutorial
   gem 'rspec-rails', '~> 2.12'
-  gem 'sauce', '~> 3.0.0.beta.1'
+  gem 'sauce', '~> 3.0.0.beta.2', :github => "sauce-labs/sauce_ruby"
   gem 'capybara', '~> 2.0.3'
   gem 'parallel_tests'
 end
@@ -177,13 +177,6 @@ You should output much like the following:
 [Connecting to Sauce Labs...]
 [Connecting to Sauce Labs...]
 [Connecting to Sauce Labs...]
-Sauce Connect 3.0-r25, build 38
-Sauce Connect 3.0-r25, build 38
-Sauce Connect 3.0-r25, build 38
-Sauce Connect 3.0-r25, build 38
-Sauce Connect 3.0-r25, build 38
-Sauce Connect 3.0-r25, build 38
-Sauce Connect 3.0-r25, build 38
 Sauce Connect 3.0-r25, build 38
 
 [snip]A LOT OF TEST DATA[/snip]
