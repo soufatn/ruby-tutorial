@@ -1,7 +1,7 @@
 Using Sauce Labs with Ruby
 ============
 
-The sauce gem makes it easy to take your existing Selenium or Capybara tests, or write new ones, and run them against a wide range of browsers on Windows (XP, 7, 8), OS X, Linux, iOS and Android. 
+The sauce gem makes it easy to take new or existing Selenium or Capybara tests and run them against a wide range of browsers on Windows (XP, 7, 8), OS X, Linux, iOS and Android. 
 
 This example uses [Capybara](http://jnicklas.github.com/capybara/) and RSpec with Rails 3 and Ruby 1.9, but Sauce Labs also works great against any Ruby web stack, and with [Test::Unit](https://saucelabs.com/docs/ondemand/getting-started/env/ruby/se2/mac), [Cucumber](https://github.com/sauce-labs/sauce_ruby/wiki/Cucumber-and-Capybara), and most other testing frameworks... right down to vanilla [WebDriver](http://code.google.com/p/selenium/wiki/RubyBindings).
 
@@ -43,8 +43,7 @@ In your Gemfile:
 group :test, :development do
   # These are the target gems of this tutorial
   gem 'rspec-rails', '~> 2.12'
-  gem 'sauce', '~> 2.4.0'
-  gem 'sauce-connect', '~> 2.4.0'
+  gem 'sauce', '~> 3.0.0.beta.1'
   gem 'capybara', '~> 2.0.3'
   gem 'parallel_tests'
 end
@@ -56,36 +55,36 @@ Setting up RSpec
 From your `$RAILS_ROOT`, generate a ./spec directory, a ./spec/spec_helper.rb file, and a warm, fuzzy feeling of productivity by executing:
 
     $ rails generate rspec:install
+    
+Set up your spec_helper and create a template sauce_helper, by running:
+    $ rake sauce:install
 
-Inside the newly created spec/spec_helper.rb, just under the other `require` statements, we'll add Capybara and the Sauce gem, and tell Capybara to use Sauce Labs for all tests (by default, it's only used for tests marked :js => true):
+Now, open the new spec/spec_helper.rb file, add a `require "sauce/capybara"` and configure your desired test platforms:
+
+```ruby
+require "sauce"
+require "sauce/capybara"
+
+Sauce.config do |c|
+  c[:browsers] = [ 
+    ["Windows", "Firefox", "18"],
+    ["Linux", "Chrome", nil],
+    ["Mac", "Firefox", "19"],
+    ["Mac", "Firefox", "17"]
+  ]
+end
+```
+
+Check out [our platforms page](http://saucelabs.com/docs/platforms) for available platforms (130+ and counting!).
+
+Inside the newly created spec/spec_helper.rb, just under the other `require` statements, we'll add requires for capybara/rails and capybara/rspec, and tell Capybara to use Sauce Labs for all tests (by default, it's only used for tests marked :js => true):
 
 ```ruby
 require 'capybara/rails'
 require 'capybara/rspec'
-require 'sauce/capybara'
 
 Capybara.default_driver = :sauce
 ```
-
-We'll add the browsers we want to run, and figure out which to use based on the thread we're in:
-```ruby
-BROWSERS = [
-  ["Windows", "Firefox", "18"],
-  ["Linux", "Chrome", nil],
-  ["Mac", "Firefox", "19"],
-  ["Mac", "Firefox", "17"]
-]
-
-index = ENV["TEST_ENV_NUMBER"] != "" ? (ENV["TEST_ENV_NUMBER"].to_i - 1) : 0
-platform = BROWSERS[index]
-Sauce.config do |config|
-  config[:os] = platform[0]
-  config[:browser] = platform[1]
-  config[:version] = platform[2]
-end
-```
-
-Check out [our platforms page](http://saucelabs.com/docs/platforms) and pick which ones you'd like to test against.
 
 Setting up the Sauce Gem
 -------------------------
@@ -161,41 +160,40 @@ And that's everything!
 Running your tests
 ------------------
 
-`$ parallel_test -n 4 -e 'rspec'`
+`$ rake sauce:spec`
 
 It's that simple (Thanks in part to the excellent [parallel_tests](https://github.com/grosser/parallel_tests) gem.)
-The `-n 4` here is the number of parallel test to run; set this to the number of browsers you want running in parallel.
+Your tests will run once for every platform, taking advantage of Sauce Labs to run as concurrently as possible.
 
-You should get the following output:
+You should output much like the following:
 
-    Finished in 1 minute 18.14 seconds
-    2 examples, 0 failures
+```
+20 processes for 8 specs, ~ 0 specs per process
+[Connecting to Sauce Labs...]
+[Connecting to Sauce Labs...]
+[Connecting to Sauce Labs...]
+[Connecting to Sauce Labs...]
+[Connecting to Sauce Labs...]
+[Connecting to Sauce Labs...]
+[Connecting to Sauce Labs...]
+[Connecting to Sauce Labs...]
+Sauce Connect 3.0-r25, build 38
+Sauce Connect 3.0-r25, build 38
+Sauce Connect 3.0-r25, build 38
+Sauce Connect 3.0-r25, build 38
+Sauce Connect 3.0-r25, build 38
+Sauce Connect 3.0-r25, build 38
+Sauce Connect 3.0-r25, build 38
+Sauce Connect 3.0-r25, build 38
 
-    Randomized with seed 40484
+[snip]A LOT OF TEST DATA[/snip]
 
-    .
+8 examples, 0 failures
 
-    Finished in 1 minute 19.89 seconds
-    2 examples, 0 failures
+Took 196.657036 seconds
+```
 
-    Randomized with seed 56147
-    
-    .
-    
-    Finished in 1 minute 45.34 seconds
-    2 examples, 0 failures
-
-    Randomized with seed 40423
-
-    .
-
-    Finished in 2 minutes 1.13 seconds
-    2 examples, 0 failures
-
-    Randomized with seed 82321
-
-
-The `2 examples, 0 failures` lines means the tests are passing, congratulations!
+The `8 examples, 0 failures` lines means your tests are running against each browser, and passing, congratulations!
 
 Running in parallel makes your build faster, and doing it with multiple browsers helps you reach a wider audience.
 
