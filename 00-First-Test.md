@@ -44,6 +44,7 @@ group :test, :development do
   # These are the target gems of this tutorial
   gem 'rspec-rails', '~> 2.12'
   gem 'sauce', '~> 3.0.0.beta.2', :github => "sauce-labs/sauce_ruby"
+  gme 'sauce-connect'
   gem 'capybara', '~> 2.0.3'
   gem 'parallel_tests'
 end
@@ -169,13 +170,6 @@ You should output much like the following:
 
 ```
 20 processes for 8 specs, ~ 0 specs per process
-[Connecting to Sauce Labs...]
-[Connecting to Sauce Labs...]
-[Connecting to Sauce Labs...]
-[Connecting to Sauce Labs...]
-[Connecting to Sauce Labs...]
-[Connecting to Sauce Labs...]
-[Connecting to Sauce Labs...]
 [Connecting to Sauce Labs...]
 Sauce Connect 3.0-r25, build 38
 
