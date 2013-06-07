@@ -43,7 +43,7 @@ In your Gemfile:
 group :test, :development do
   # These are the target gems of this tutorial
   gem 'rspec-rails', '~> 2.12'
-  gem 'sauce', '~> 3.0.0.beta.2', :github => "sauce-labs/sauce_ruby"
+  gem 'sauce', '~> 3.0.0', :github => "sauce-labs/sauce_ruby"
   gme 'sauce-connect'
   gem 'capybara', '~> 2.0.3'
   gem 'parallel_tests'
