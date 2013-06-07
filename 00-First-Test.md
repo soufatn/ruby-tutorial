@@ -26,9 +26,9 @@ end
 
 ```
 
-Your tests are run in real browsers on a real operating system, in a dedicated, single-use VM.
-Once they're complete, screenshots, video, Selenium log and a log of
-passes and failures can be seen and shared.
+Your tests are run in real browsers on a real operating system, in a
+dedicated, single-use VM.  Once they're complete, screenshots, video,
+Selenium log and a log of passes and failures can be seen and shared.
 
 We're working on making this tutorial as clear, simple, and relevant
 as possible. If you run into any problems, or have questions or
@@ -161,12 +161,14 @@ And that's everything!
 Running your tests
 ------------------
 
-`$ rake sauce:spec`
+```bash
+$ rake sauce:spec
+```
 
 It's that simple (Thanks in part to the excellent [parallel_tests](https://github.com/grosser/parallel_tests) gem.)
-Your tests will run once for every platform, taking advantage of Sauce Labs to run as concurrently as possible.
+Your tests will run once for every platform, taking advantage of Sauce Labs to run at the maximum concurrency for your account. You can manually adjust the concurrency level by specifying it square brackets, like so: `$ rake sauce:spec[1]`.
 
-You should output much like the following:
+You should see output much like the following:
 
 ```
 20 processes for 8 specs, ~ 0 specs per process
@@ -192,26 +194,14 @@ What's Next?
 
 Now that you have an example to work with, it's time to write a test for your web app! For more info on how to write Capybara tests, we recommend the excellent [Capybara README](https://github.com/jnicklas/capybara).
 
-**Tunnel to your local machine with Sauce Connect**
+**Testing against local servers with Sauce Connect**
 
-If you need to test a staged site behind your firewall, that's no problem: check out [Sauce Connect](http://saucelabs.com/docs/connect).
+If you need to test a staged site behind your firewall, that's no problem: you're already set up to use [Sauce Connect](http://saucelabs.com/docs/connect), which means local servers are available to your Sauce Labs tests.
 
-To use Sauce Connect with the Sauce gem, simply add it to your Gemfile:
-
-```ruby
-gem 'sauce-connect'
-```
-
-then enable it in your Sauce.config block:
+If you don't need access to local servers, you can turn Sauce Connect off by adding this to your Sauce.config block:
 
 ```ruby
-require 'sauce/parallel'
-
-Sauce.config do |config|
-  start_tunnel_for_parallel_tests(config)
-  # or, if you're not using parallel_tests, do this instead:
-  # config[:start_tunnel] = true
-end
+  config[:start_tunnel] = false
 ```
 
 When using Capybara and Sauce Connect, you need to specify the port Capybara spins up on.  Pick your favorite port:
