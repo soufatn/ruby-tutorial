@@ -49,10 +49,10 @@ Now, open the new spec/sauce_helper.rb file, and configure your desired test pla
 ```ruby
 Sauce.config do |c|
   c[:browsers] = [ 
-    ["Windows", "Firefox", "18"],
-    ["Linux", "Chrome", nil],
-    ["Mac", "Firefox", "19"],
-    ["Mac", "Firefox", "17"]
+    ["Windows 8", "Internet Explorer", "10"],             
+    ["Windows 7", "Firefox", "20"],
+    ["OS X 10.8", "Safari", "6"],                         
+    ["Linux", "Chrome", nil]          
   ]
 end
 ```
