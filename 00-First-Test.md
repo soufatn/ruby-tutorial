@@ -1,30 +1,9 @@
 Using Sauce Labs with Ruby
 ============
 
-The sauce gem makes it easy to take new or existing Selenium or Capybara tests and run them against a wide range of browsers on Windows (XP, 7, 8), OS X, Linux, iOS and Android. 
+The sauce gem makes it easy to run Selenium or Capybara tests against a wide range of browsers on Windows (XP, 7, 8), OS X, Linux, iOS and Android. 
 
 This example uses [Capybara](http://jnicklas.github.com/capybara/) and RSpec with Rails 3 and Ruby 1.9, but Sauce Labs also works great against any Ruby web stack, and with [Test::Unit](https://saucelabs.com/docs/ondemand/getting-started/env/ruby/se2/mac), [Cucumber](https://github.com/sauce-labs/sauce_ruby/wiki/Cucumber-and-Capybara), and most other testing frameworks... right down to vanilla [WebDriver](http://code.google.com/p/selenium/wiki/RubyBindings).
-
-Once you're set up, you'll write tests like this:
-
-```ruby
-Sauce.config do |c|
-  c[:browsers] = [
-    ["Windows 7", "Internet Explorer", "9"],
-    ["Mac", "Firefox", "17"]
-  ]
-end
-
-describe "Wikipedia's Ramen Page" do
-  it "Should mention the inventor of instant Ramen" do
-    visit "http://en.wikipedia.org/"
-    fill_in 'search', :with => "Ramen"
-    click_button "searchButton"
-    page.should have_content "Momofuku Ando"
-  end 
-end
-
-```
 
 Your tests are run in real browsers on a real operating system, in a
 dedicated, single-use VM.  Once they're complete, screenshots, video,
@@ -55,17 +34,19 @@ Setting up RSpec
 
 From your `$RAILS_ROOT`, generate a ./spec directory, a ./spec/spec_helper.rb file, and a warm, fuzzy feeling of productivity by executing:
 
+```bash
     $ rails generate rspec:install
-    
-Set up your spec_helper and create a template sauce_helper, by running:
-    $ rake sauce:install
+```
 
-Now, open the new spec/spec_helper.rb file, add a `require "sauce/capybara"` and configure your desired test platforms:
+Set up your spec_helper and create a template sauce_helper, by running:
+
+```bash
+    $ rake sauce:install:spec
+```
+
+Now, open the new spec/sauce_helper.rb file, and configure your desired test platforms. Here's an example:
 
 ```ruby
-require "sauce"
-require "sauce/capybara"
-
 Sauce.config do |c|
   c[:browsers] = [ 
     ["Windows", "Firefox", "18"],
