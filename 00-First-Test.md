@@ -203,6 +203,6 @@ Capybara.server_port = your_chosen_port
 
 If you find that you run into problems with all your tests using the same db at once, or otherwise need some careful setup, the 
 [parallel_tests instructions](https://github.com/grosser/parallel_tests)
-has useful info.
+have useful info.
 
 <!-- SAUCE:INCLUDE:get-support -->
