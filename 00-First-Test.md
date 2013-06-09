@@ -147,7 +147,7 @@ $ rake sauce:spec
 ```
 
 It's that simple (Thanks in part to the excellent [parallel_tests](https://github.com/grosser/parallel_tests) gem.)
-Your tests will run once for every platform, taking advantage of Sauce Labs to run at the maximum concurrency for your account. You can manually adjust the concurrency level by specifying it square brackets, like so: `$ rake sauce:spec[1]`.
+Your tests will run once for every platform, taking advantage of Sauce Labs to run at the maximum concurrency for your account. The sauce:spec rake command takes two optional parameters to let you control the directory you keep your specs in and the level of concurrency at which you run them. For example, to run specs from the `spec` directory one at a time, you'd run the command like so: `$ rake sauce:spec[spec,1]`.
 
 You should see output much like the following:
 
@@ -163,9 +163,9 @@ Sauce Connect 3.0-r25, build 38
 Took 196.657036 seconds
 ```
 
-The `8 examples, 0 failures` lines means your tests are running against each browser, and passing, congratulations!
+The `8 examples, 0 failures` line means your tests are running against each browser, and passing. Congratulations!
 
-Running in parallel makes your build faster, and doing it with multiple browsers helps you reach a wider audience.
+Running in parallel makes your build faster, so you can run more tests in more browsers in less total time.
 
 Check out the results, including a command log, screenshots, and video of the browser executing the test, on your [account page](https://saucelabs.com/account).
 
