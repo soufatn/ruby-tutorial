@@ -147,7 +147,10 @@ $ rake sauce:spec
 ```
 
 It's that simple (Thanks in part to the excellent [parallel_tests](https://github.com/grosser/parallel_tests) gem.)
-Your tests will run once for every platform, taking advantage of Sauce Labs to run at the maximum concurrency for your account. The sauce:spec rake command takes two optional parameters to let you control the directory you keep your specs in and the level of concurrency at which you run them. For example, to run specs from the `spec` directory one at a time, you'd run the command like so: `$ rake sauce:spec[spec,1]`.
+Your tests will run once for every platform, taking advantage of Sauce Labs to run at the maximum concurrency for your 
+account. The sauce:spec rake command takes two optional parameters to let you control the directory you keep your specs 
+in and the level of concurrency at which you run them. For example, to run specs from the "spec" directory one at a time,
+you'd run the command like so: `$ rake sauce:spec[spec,1]`.
 
 You should see output much like the following:
 
