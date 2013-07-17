@@ -63,7 +63,7 @@ end
 
 Check out [our platforms page](http://saucelabs.com/docs/platforms) for available platforms (130+ and counting!).
 
-Inside the newly created spec/spec_helper.rb, just under the other `require` statements, we'll add requires for capybara/rails and capybara/rspec, and tell Capybara to use Sauce Labs for all tests (by default, it's only used for tests marked :js => true):
+Inside the newly created spec/spec_helper.rb, just under the other `require` statements, we'll add requires for capybara/rails and capybara/rspec, and tell Capybara to use the Sauce Labs driver:
 
 ```ruby
 require 'capybara/rails'
@@ -106,8 +106,9 @@ Writing your tests
 Phew!  That's all your setup done.  You're ready to write your tests.
 
 Because we want the Capybara DSL included, we're going to put our tests in
-the spec/features directory.  We can still turn on the Sauce voodoo by
-tagging each describe block ('example group' in RSpec-lish)  with `:sauce => true`, like this:
+the spec/features directory.
+
+Turn on the Sauce voodoo by tagging each describe block ('example group' in RSpec-lish)  with `:sauce => true` like this:
 
     $ mkdir ./spec/features
     $ vim ./spec/features/ramen_spec.rb
@@ -175,6 +176,13 @@ The `8 examples, 0 failures` line means your tests are running against each brow
 Running in parallel makes your build faster, so you can run more tests in more browsers in less total time.
 
 Check out the results, including a command log, screenshots, and video of the browser executing the test, on your [account page](https://saucelabs.com/account).
+
+Help, it didn't work!
+---------------------
+
+Make sure your example groups are tagged with `:sauce => true`.  Without this tag, the RSpec integration won't be used, and your tests will only run with the default Sauce configuration.
+
+If you still can't get things going, drop us a line at help@saucelabs.com and we're happy to assist you.  Don't forget to include your Gemfile.lock!
 
 What's Next?
 ------------
