@@ -217,4 +217,8 @@ If you find that you run into problems with all your tests using the same db at 
 [parallel_tests instructions](https://github.com/grosser/parallel_tests)
 have useful info.
 
+**The Sauce Gem**
+
+The Sauce gem has its own [github repo](https://github.com/saucelabs/sauce_ruby) and a constantly evolving [wiki](https://github.com/saucelabs/sauce_ruby/wiki/_pages) you should check out!
+
 <!-- SAUCE:INCLUDE:get-support -->
