@@ -22,7 +22,7 @@ In your Gemfile:
 group :test, :development do
   # These are the target gems of this tutorial
   gem 'rspec-rails', '~> 2.12'
-  gem 'sauce', '~> 3.0.3'
+  gem 'sauce', '~> 3.1.1'
   gem 'sauce-connect'
   gem 'capybara', '~> 2.0.3'
   gem 'parallel_tests'
@@ -48,6 +48,7 @@ Now, open the new spec/sauce_helper.rb file, and configure your desired test pla
 
 ```ruby
 # Use Capybara integration
+require "sauce"
 require "sauce/capybara"
 
 # Set up configuration
@@ -198,17 +199,6 @@ If you don't need access to local servers, you can turn Sauce Connect off by add
 
 ```ruby
   config[:start_tunnel] = false
-```
-
-When using Capybara and Sauce Connect, you need to specify the port Capybara spins up on.  Pick your favorite port:
-
-```bash
-80, 443, 888, 2000, 2001, 2020, 2222, 3000, 3001, 3030, 3333, 4000, 4001, 4040, 4502, 4503, 5000, 5001, 5050, 5555, 6000, 6001, 6060, 6666, 7000, 7070, 7777, 8000, 8001, 8003, 8031, 8080, 8081, 8888, 9000, 9001, 9080, 9090, 9999, 49221
-```
-And set the server port in spec_helper.rb:
-
-```ruby
-Capybara.server_port = your_chosen_port
 ```
 
 **parallel_tests considerations**
